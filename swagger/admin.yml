@@ -1,0 +1,27 @@
+resourcePath: /Business
+description: Business API's
+apis:
+
+- path: /api/admin
+  operations:
+
+    - httpMethod: POST
+      summary: Business_sign_up
+      notes:  Manadatory Params  (For app - emailId,password)
+      nickname: add_admin
+      consumes:
+        - application/json
+      parameters:
+
+      - name: body
+        dataType: body
+        defaultValue: '{
+                          "emailId":"udit.kumawat@gmail.com",
+                          "password":"qwerty"
+                        }'
+        paramType: body
+        required: false
+        description:
+      responses:
+        200:
+         description: An array of keys

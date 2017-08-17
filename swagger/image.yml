@@ -1,0 +1,74 @@
+resourcePath: /Image
+description: Image API's
+apis:
+
+- path: /api/image
+  operations:
+
+    - httpMethod: GET
+      summary: Get Image
+      notes:  Manadatory Params
+      nickname: get_image
+      consumes:
+        - application/json
+      parameters:
+
+      - name: accessKey
+        dataType: string
+        paramType: query
+        required: true
+        description: accessKey
+
+      - name: name
+        dataType: string
+        paramType: query
+        required: true
+        description: path of file
+
+      responses:
+        200:
+         description: An array of keys
+
+- path: /api/image
+  operations:
+
+    - httpMethod: POST
+      summary: Add Image
+      notes:  Manadatory Params  (For app - accessKey)
+      nickname: add_image
+      consumes:
+        - application/json
+      parameters:
+
+      - name: body
+        dataType: body
+        defaultValue: '{
+                          "accessKey":"qwerty"
+                        }'
+        paramType: body
+        required: false
+        description:
+      responses:
+        200:
+         description: An array of keys
+
+- path: /api/imagesList
+  operations:
+
+    - httpMethod: GET
+      summary: Get all Images names
+      notes:  Manadatory Params
+      nickname: all_images
+      consumes:
+        - application/json
+      parameters:
+
+      - name: accessKey
+        dataType: string
+        paramType: query
+        required: true
+        description: accessKey
+
+      responses:
+        200:
+         description: An array of keys

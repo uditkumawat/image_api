@@ -1,0 +1,32 @@
+{
+  "name": "imageapi_project",
+  "version": "1.0.0",
+  "description": "image-api-project-es6 project features mvc structure",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "es6",
+    "mvc",
+    "structure"
+  ],
+  "author": "udit",
+  "license": "ISC",
+  "dependencies": {
+    "async": "2.2.0",
+    "bcrypt": "1.0.2",
+    "body-parser": "1.17.1",
+    "connect-multiparty": "2.0.0",
+    "express": "4.15.2",
+    "express-joi-validator": "2.0.0",
+    "express-validation": "1.0.2",
+    "joi": "10.3.0",
+    "mongoose": "4.9.1",
+    "nodemon": "1.11.0",
+    "redis": "2.7.1",
+    "swagger-express": "1.0.5",
+    "winston": "2.3.1",
+    "winston-daily-rotate-file": "1.4.6"
+  }
+}
