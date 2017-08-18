@@ -9,6 +9,11 @@ if(!process.env.NODE_ENV)
 
 const STATUS_MSG = {
     ERROR: {
+        FILE_NAME_ALREADY_EXISTS:{
+            statusCode : 400,
+            message : 'File name already exists',
+            type : 'FILE_NAME_ALREADY_EXISTS'
+        },
         NOT_CORRECT_FORMAT:{
             statusCode : 400,
             message : 'Please upload file with correct image format',
