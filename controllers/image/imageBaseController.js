@@ -2,6 +2,7 @@
 
 const async = require('async');
 const fs = require('fs');
+const path = require('path');
 const Models = require('../../models');
 const CONFIG = require('../../config');
 
@@ -22,8 +23,10 @@ let getImage = function(req,res){
         },
         function(cb){
 
-            console.log(__dirname);
-            pathToSearch = "uploads/"+payload.accessKey+"/"+payload.name;
+
+            pathToSearch = path.join(__dirname,"../../uploads/"+payload.accessKey+"/"+payload.name);
+
+            console.log('pat',pathToSearch);
 
             if(fs.existsSync(pathToSearch)){
                 cb();
@@ -65,6 +68,26 @@ let addImage = function(req,res){
                    cb();
                }
             });
+        },
+        function(cb){
+
+            if(req.files.image){
+
+                let fileType = req.files.image.type;
+
+                let imageType = fileType.split("/")[1];
+
+                if(fileType.split("/")[0]=='image' && (imageType=='jpg'||imageType=='jpeg'||imageType=='png'||imageType=='gif')){
+
+                    cb();
+                }
+                else{
+                    cb(ERROR.NOT_CORRECT_FORMAT);
+                }
+            }
+            else{
+                cb(ERROR.ATTACH_IMAGE);
+            }
         },
         function(cb){
 
@@ -139,8 +162,20 @@ let imagesList = function(req,res){
     })
 }
 
+let updateImage = function(req,res){
+
+    res.send()
+}
+
+let deleteImage = function(req,res){
+
+    res.send();
+}
+
 module.exports = {
     addImage:addImage,
     imagesList:imagesList,
-    getImage:getImage
+    getImage:getImage,
+    updateImage:updateImage,
+    deleteImage : deleteImage
 }

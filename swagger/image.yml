@@ -6,9 +6,9 @@ apis:
   operations:
 
     - httpMethod: GET
-      summary: Get Image
+      summary: Get Image (Use postman for this testing)
       notes:  Manadatory Params
-      nickname: get_image
+      nickname: get image
       consumes:
         - application/json
       parameters:
@@ -69,6 +69,53 @@ apis:
         required: true
         description: accessKey
 
+      responses:
+        200:
+         description: An array of keys
+
+
+- path: /api/image
+  operations:
+
+    - httpMethod: PATCH
+      summary: Update Image
+      notes:  Manadatory Params  (For app - accessKey)
+      nickname: update_image
+      consumes:
+        - application/json
+      parameters:
+
+      - name: body
+        dataType: body
+        defaultValue: '{
+                          "accessKey":"qwerty"
+                        }'
+        paramType: body
+        required: false
+        description:
+      responses:
+        200:
+         description: An array of keys
+
+- path: /api/image
+  operations:
+
+    - httpMethod: DELETE
+      summary: Delete Image
+      notes:  Manadatory Params  (For app - accessKey)
+      nickname: delete_image
+      consumes:
+        - application/json
+      parameters:
+
+      - name: body
+        dataType: body
+        defaultValue: '{
+                          "accessKey":"qwerty"
+                        }'
+        paramType: body
+        required: false
+        description:
       responses:
         200:
          description: An array of keys

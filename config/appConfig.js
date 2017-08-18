@@ -9,6 +9,11 @@ if(!process.env.NODE_ENV)
 
 const STATUS_MSG = {
     ERROR: {
+        NOT_CORRECT_FORMAT:{
+            statusCode : 400,
+            message : 'Please upload file with correct image format',
+            type : 'NOT_CORRECT_FORMAT'
+        },
         FILE_NOT_FOUND:{
             statusCode : 404,
             message : 'File not Found',

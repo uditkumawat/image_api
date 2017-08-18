@@ -32,5 +32,9 @@ router.route('/image').get(validate(validations.imageValidation.getImage),CONTRO
 
 router.route('/image').post(validate(validations.imageValidation.addImage),multipartMiddleware,CONTROLLER.ImageBaseController.addImage);
 
+router.route('/image').patch(validate(validations.imageValidation.addImage),multipartMiddleware,CONTROLLER.ImageBaseController.updateImage);
+
+router.route('/image').delete(validate(validations.imageValidation.addImage),CONTROLLER.ImageBaseController.deleteImage);
+
 
 module.exports = router;
