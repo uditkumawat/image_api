@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const winston = require('winston');
 const swagger = require('swagger-express');
 const path = require('path');
+const fs = require('fs');
 const expressValidation = require('express-validation');
 const multipart = require("connect-multiparty");
 
@@ -87,6 +88,14 @@ class Server{
 
         this.http.listen(this.PORT,this.HOST,()=>{
             winston.log('info','Server Starts');
+
+            fs.stat('uploads',(err,stats)=>{
+                if(err){
+                    fs.mkdir("uploads");
+                    winston.log("info","Uploads folder created");
+                }
+
+            });
         });
 
     }
