@@ -9,7 +9,6 @@ const path = require('path');
 const fs = require('fs');
 const expressValidation = require('express-validation');
 const multipart = require("connect-multiparty");
-const mongoose=require("mongoose");
 
 const ROUTES = require('./routes');
 const CONFIG = require('./config');
@@ -81,23 +80,14 @@ class Server{
             }
         });
     }
-    
-    connectdbs(){
 
-        mongoose.connect(CONFIG.DBCONFIG.dbURL,(err,db)=>{
-            if(err)
-                winston.error("error","DB connection Error -->"+err);
-            else
-                winston.log("info","Connected to MONGO Database");
-        });
-    }
-    
     appExecute(){
         
         this.appConfig();
         this.includeRoutes();
 
         this.http.listen(this.PORT,this.HOST,()=>{
+            
             winston.log('info','Server Starts');
 
             fs.stat('uploads',(err,stats)=>{
@@ -107,10 +97,15 @@ class Server{
                 }
 
             });
+
+
+            fs.stat('credentials.json',(err,stats)=>{
+                if(err){
+                    fs.writeFile('credentials.json','',(err)=>{
+                    });
+                }
+            });
         });
-
-        this.connectdbs();
-
     }
 };
 

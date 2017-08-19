@@ -26,6 +26,8 @@ router.route('/logs/:type/:date').get((req,res)=>{
 
 router.route('/user').post(validate(validations.userValidation.addUser),CONTROLLER.UserBaseController.addUser);
 
+router.route('/user').put(validate(validations.userValidation.updateUser),CONTROLLER.UserBaseController.regenerateKey);
+
 router.route('/imagesList').get(validate(validations.imageValidation.getImagesList),CONTROLLER.ImageBaseController.imagesList);
 
 router.route('/image').get(validate(validations.imageValidation.getImage),CONTROLLER.ImageBaseController.getImage);

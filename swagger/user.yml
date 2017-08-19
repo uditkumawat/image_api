@@ -8,7 +8,31 @@ apis:
     - httpMethod: POST
       summary: Business_sign_up
       notes:  Manadatory Params  (For app - email)
-      nickname: add_admin
+      nickname: signUp_user
+      consumes:
+        - application/json
+      parameters:
+
+      - name: body
+        dataType: body
+        defaultValue: '{
+                          "email":"udit.kumawat@gmail.com"
+                        }'
+        paramType: body
+        required: false
+        description:
+      responses:
+        200:
+         description: An array of keys
+
+
+- path: /api/user
+  operations:
+
+    - httpMethod: PUT
+      summary: Regenerate new Access Key
+      notes:  Manadatory Params  (For app - email)
+      nickname: regeneratekey
       consumes:
         - application/json
       parameters:

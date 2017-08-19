@@ -9,6 +9,16 @@ if(!process.env.NODE_ENV)
 
 const STATUS_MSG = {
     ERROR: {
+        EMAIL_NOT_FOUND:{
+            statusCode : 400,
+            message : 'Email does not exists.Please Sign up',
+            type : 'EMAIL_NOT_FOUND'
+        },
+        EMAIL_EXISTS:{
+            statusCode : 400,
+            message : 'Email already exists',
+            type : 'EMAIL_EXISTS'
+        },
         DB_ERROR:{
             statusCode : 400,
             message : 'Something went wrong in Db connection',
@@ -51,6 +61,12 @@ const STATUS_MSG = {
         }
     },
     SUCCESS: {
+        USER_UPDATED:{
+            statusCode: 200,
+            message: "User details updated successfully",
+            type : "USER_UPDATED",
+            data : null
+        },
         USER_ADDED:{
             statusCode: 200,
             message: "User added successfully",
