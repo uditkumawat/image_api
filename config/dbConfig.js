@@ -7,20 +7,14 @@ const winston = require('winston');
 class DB {
 
     constructor() {
+        
+        this.dbURL = "mongodb://localhost/imagemanagement";
 
-        if (process.env.NODE_ENV == 'dev' || process.env.NODE_ENV == 'develop' || process.env.NODE_ENV == 'DEV') {
-
-            this.dbURL = "mongodb://localhost/newdev";
-        }
-        else {
-            this.dbURL = "mongodb://localhost/newLocal";
-        }
-
-        this.redisClient = "";
-        this.connectRedisDB();
+        //this.redisClient = "";
+        //this.connectRedisDB();
     }
 
-    connectRedisDB(){
+    /*connectRedisDB(){
 
         this.redisClient = redis.createClient();
 
@@ -36,7 +30,7 @@ class DB {
             if(err)
                 console.log(err);
         })
-    }
+    }*/
 };
 
 module.exports = new DB();

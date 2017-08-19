@@ -1,6 +1,6 @@
 "use strict";
 
 module.exports = {
-    adminValidation : require('./adminValidations.js'),
+    userValidation : require('./userValidations.js'),
     imageValidation : require('./imageValidations.js')
 };

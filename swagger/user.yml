@@ -2,12 +2,12 @@ resourcePath: /Business
 description: Business API's
 apis:
 
-- path: /api/admin
+- path: /api/user
   operations:
 
     - httpMethod: POST
       summary: Business_sign_up
-      notes:  Manadatory Params  (For app - emailId,password)
+      notes:  Manadatory Params  (For app - email)
       nickname: add_admin
       consumes:
         - application/json
@@ -16,8 +16,7 @@ apis:
       - name: body
         dataType: body
         defaultValue: '{
-                          "emailId":"udit.kumawat@gmail.com",
-                          "password":"qwerty"
+                          "email":"udit.kumawat@gmail.com"
                         }'
         paramType: body
         required: false

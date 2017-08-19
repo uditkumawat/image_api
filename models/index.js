@@ -2,5 +2,5 @@
 
 module.exports = {
 
-    Admin : require('./admin.js')
+    User : require('./user.js')
 };

@@ -9,6 +9,7 @@ const path = require('path');
 const fs = require('fs');
 const expressValidation = require('express-validation');
 const multipart = require("connect-multiparty");
+const mongoose=require("mongoose");
 
 const ROUTES = require('./routes');
 const CONFIG = require('./config');
@@ -39,7 +40,7 @@ class Server{
             swaggerURL : '/swagger',
             swaggerJSON : '/api-docs.json',
             swaggerUI : './public/swagger/',
-            apis : ['./swagger/admin.yml','./swagger/image.yml'],
+            apis : ['./swagger/user.yml','./swagger/image.yml'],
             info:{
                 title : 'Image APIs',
                 name : 'Project APIs'
@@ -81,6 +82,16 @@ class Server{
         });
     }
     
+    connectdbs(){
+
+        mongoose.connect(CONFIG.DBCONFIG.dbURL,(err,db)=>{
+            if(err)
+                winston.error("error","DB connection Error -->"+err);
+            else
+                winston.log("info","Connected to MONGO Database");
+        });
+    }
+    
     appExecute(){
         
         this.appConfig();
@@ -97,6 +108,8 @@ class Server{
 
             });
         });
+
+        this.connectdbs();
 
     }
 };

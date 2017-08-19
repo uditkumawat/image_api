@@ -24,7 +24,7 @@ router.route('/logs/:type/:date').get((req,res)=>{
     res.sendFile(path.resolve(__dirname+"/../logs/"+req.params.date+'-'+req.params.type+'.log'));
 });
 
-router.route('/admin').post(validate(validations.adminValidation.addAdmin),CONTROLLER.AdminBaseController.addAdmin);
+router.route('/user').post(validate(validations.userValidation.addUser),CONTROLLER.UserBaseController.addUser);
 
 router.route('/imagesList').get(validate(validations.imageValidation.getImagesList),CONTROLLER.ImageBaseController.imagesList);
 

@@ -4,7 +4,7 @@ class ServerConfig {
 
     constructor() {
 
-        this.PORT = 8001;
+        this.PORT = 8000;
     }
 };
 

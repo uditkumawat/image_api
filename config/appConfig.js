@@ -9,6 +9,11 @@ if(!process.env.NODE_ENV)
 
 const STATUS_MSG = {
     ERROR: {
+        DB_ERROR:{
+            statusCode : 400,
+            message : 'Something went wrong in Db connection',
+            type : 'DB_ERROR'
+        },
         FILE_NAME_ALREADY_EXISTS:{
             statusCode : 400,
             message : 'File name already exists',
@@ -46,6 +51,12 @@ const STATUS_MSG = {
         }
     },
     SUCCESS: {
+        USER_ADDED:{
+            statusCode: 200,
+            message: "User added successfully",
+            type : "USER_ADDED",
+            data : null
+        },
         IMAGE_LIST:{
             statusCode: 200,
             message: "Images List",

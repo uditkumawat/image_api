@@ -2,6 +2,6 @@
 
 module.exports={
 
-    AdminBaseController : require('./admin/adminBaseController.js'),
+    UserBaseController : require('./user/userBaseController.js'),
     ImageBaseController : require('./image/imageBaseController.js')
 }
