@@ -1,5 +1,7 @@
 # Image_Management_System
 
+Image Management System based on File system (no use of database)
+
 Download or clone this repository.
 
 Run these commands in sequence - 
