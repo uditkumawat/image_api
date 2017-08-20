@@ -28,15 +28,15 @@ class Server{
 
         this.app.set('port',this.PORT);
         this.app.use(multipart());
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({extended:true}));
+        this.app.use(bodyParser.json({limit:'4mb'}));
+        this.app.use(bodyParser.urlencoded({limit:'4mb',extended:true}));
         this.app.use(express.static(path.join(__dirname,'public')));
         
         this.app.use(swagger.init(this.app,{
             apiVersion : '1.0',
             swaggerVersion : '1.0',
             basePath : CONFIG.APPCONFIG.SWAGGER_BASE_LINK + this.PORT,
-            swaggerURL : '/swagger',
+            swaggerURL : '/apidocs',
             swaggerJSON : '/api-docs.json',
             swaggerUI : './public/swagger/',
             apis : ['./swagger/user.yml','./swagger/image.yml'],

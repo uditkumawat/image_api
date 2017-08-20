@@ -7,7 +7,7 @@ Run these commands in sequence -
 1.npm install
 2.nodemon server.js
 
-Run browser and go to this url to get listing of API's - localhost:8000/swagger
+Run browser and go to this url to get listing of API's - localhost:8000/apidocs
 
 # API specs-
 
