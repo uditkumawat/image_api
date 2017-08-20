@@ -117,6 +117,10 @@ let addImage = function(req,res){
 
                     let timestamp = new Date().getTime().toString();
 
+                    //remove spaces from string
+
+                    req.files.image.name = req.files.image.name.replace(/\s/g,'');
+
                     let newFileName = timestamp+"-"+req.files.image.name;
 
                     req.files.image.name = newFileName;
@@ -144,7 +148,10 @@ let addImage = function(req,res){
                                 delete req.files.image.path;
                                 delete req.files.image.headers;
 
-                                //saving its originalName,size and newName in file
+                                //saving its originalName,size,newName,createdOn,updatedOn in file
+
+                                req.files.image.createdOn = new Date();
+                                req.files.image.updatedOn = new Date();
 
                                 fileData.push(req.files.image);
 
@@ -214,7 +221,123 @@ let imagesList = function(req,res){
 
 let updateImage = function(req,res){
 
-    res.send()
+    let payload = req.body;
+
+    async.series([
+        function(cb){
+
+            //check for folder if does not exists then create
+
+            fs.stat('uploads/'+payload.secretKey,(err,stats)=>{
+                if(err){
+                    fs.mkdir("uploads/"+payload.secretKey);
+                    cb();
+                }
+                else{
+                    cb();
+                }
+            });
+        },
+        function(cb){
+
+            //check for image type
+
+            if(req.files.image){
+
+                let fileType = req.files.image.type;
+
+                let imageType = fileType.split("/")[1];
+
+                if(fileType.split("/")[0]=='image' && (imageType=='jpg'||imageType=='jpeg'||imageType=='png'||imageType=='gif')){
+
+                    cb();
+                }
+                else{
+                    cb(ERROR.NOT_CORRECT_FORMAT);
+                }
+            }
+            else{
+                cb(ERROR.ATTACH_IMAGE);
+            }
+        },
+        function(cb){
+
+            let metaDatafile = "uploads/" + payload.secretKey + "/metadata.json";
+
+            fs.readFile(metaDatafile,"utf-8",(err,data)=>{
+
+                let fileData=[];
+
+                let indexOfUpdatedObj = null;
+
+                if(data){
+                    fileData = JSON.parse(data);
+
+                    fileData.forEach((obj,index)=>{
+
+                        if(obj.name == payload.name){
+
+                            indexOfUpdatedObj = index;
+                        }
+                    });
+                }
+
+                if(indexOfUpdatedObj!=null){
+
+                    fs.readFile(req.files.image.path,(err,data)=>{
+
+                        if(data)
+                        {
+                            //making a unique name of image file
+
+                            let timestamp = new Date().getTime().toString();
+
+                            req.files.image.name = req.files.image.name.replace(/\s/g,'');
+
+                            let newFileName = timestamp+"-"+req.files.image.name;
+
+                            req.files.image.name = newFileName;
+
+                            let uploadedPath = "uploads/" + payload.secretKey + "/" + newFileName;
+
+                            fs.writeFile(uploadedPath, data, (err)=> {
+                                if (err)
+                                    cb(ERROR.UPLOADING_ERROR);
+                                else {
+
+                                    let fileToUpdate = path.join(__dirname,"../../uploads/"+payload.secretKey+"/"+payload.name);
+                                    fs.unlink(fileToUpdate,(err)=>{});
+
+                                    fileData[indexOfUpdatedObj].name = newFileName;
+                                    fileData[indexOfUpdatedObj].updatedOn = new Date();
+                                    fileData[indexOfUpdatedObj].size = req.files.image.size;
+                                    fileData[indexOfUpdatedObj].originalFilename = req.files.image.originalFilename;
+
+                                    fs.writeFile(metaDatafile, JSON.stringify(fileData), 'utf-8', (err, data)=> {
+                                    });
+                                    
+                                    cb();
+                                }
+                            })
+                        }
+                        else{
+                            cb();
+                        }
+                    });
+                }
+                else{
+                    cb(ERROR.FILE_NOT_FOUND);
+                }
+            });
+        }
+    ],function(error,result){
+        if (error)
+            return res.status(400).json(error);
+        else {
+            let response = SUCCESS.IMAGE_UPDATED;
+            return res.send(response);
+        }
+    });
 }
 
 let deleteImage = function(req,res){

@@ -17,7 +17,21 @@ module.exports = {
     },
     addImage: {
         body: {
-            accessKey : Joi.string().trim().required()
+            accessKey : Joi.string().trim().required(),
+            image : Joi.any().description("Image File")
+        }
+    },
+    updateImage:{
+        body: {
+            accessKey : Joi.string().trim().required(),
+            name : Joi.string().trim().required().description("Name of file which is to updated"),
+            image : Joi.any().description("Image File")
+        }
+    },
+    deleteImage: {
+        body: {
+            accessKey : Joi.string().trim().required(),
+            name : Joi.string().trim().required()
         }
     }
 };

@@ -47,4 +47,4 @@ PATCH -> /api/image , Request Body Parameter required --> accessKey , name , ima
 
 Example - localhost:8000/api/image
 
-Form-Data => { accessKey : "WDWFCNdJMP", image : file }
+Form-Data => { accessKey : "WDWFCNdJMP", name : fileName , image : file }

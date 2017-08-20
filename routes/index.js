@@ -16,6 +16,11 @@ let multipartMiddleware = multipart();
 
 const ERROR = require("../config").APPCONFIG.STATUS_MSG.ERROR;
 
+//middleware to log each request
+router.use(function (req, res, next) {
+    winston.log("info", req.connection.remoteAddress, req.method, req.url);
+    next();
+});
 
 router.route('*').get((req,res)=>{
    return res.sendFile(path.join(__dirname),'public/index.html');
@@ -80,8 +85,11 @@ router.route('/image').get(validate(validations.imageValidation.getImage),CONTRO
 
 router.route('/image').post(validate(validations.imageValidation.addImage),multipartMiddleware,CONTROLLER.ImageBaseController.addImage);
 
-router.route('/image').patch(validate(validations.imageValidation.addImage),multipartMiddleware,CONTROLLER.ImageBaseController.updateImage);
+router.route('/image').patch(validate(validations.imageValidation.updateImage),multipartMiddleware,CONTROLLER.ImageBaseController.updateImage);
 
-router.route('/image').delete(validate(validations.imageValidation.addImage),CONTROLLER.ImageBaseController.deleteImage);
+router.route('/image').delete(validate(validations.imageValidation.deleteImage),CONTROLLER.ImageBaseController.deleteImage);
 
+router.use(function (req, res) {
+   return res.status(404).send(ERROR.URL_NOT_FOUND);
+});
 module.exports = router;

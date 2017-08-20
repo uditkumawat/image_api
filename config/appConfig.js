@@ -9,6 +9,11 @@ if(!process.env.NODE_ENV)
 
 const STATUS_MSG = {
     ERROR: {
+        URL_NOT_FOUND:{
+            statusCode : 404,
+            message : 'Url not Found',
+            type : 'URL_NOT_FOUND'
+        },
         NO_SUCH_IMAGE:{
             statusCode : 404,
             message : 'Not Found',

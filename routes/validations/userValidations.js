@@ -5,12 +5,12 @@ module.exports = {
 
     addUser: {
         body: {
-            email : Joi.string().required()
+            email : Joi.string().trim().required()
         }
     },
     updateUser:{
         body: {
-            email : Joi.string().required()
+            email : Joi.string().trim().required()
         }
     }
 };

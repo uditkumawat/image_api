@@ -1,5 +1,63 @@
 <html>
+<title>
+    Image Management Service - REST API's
+</title>
 <body>
-Welcome to Es6 project
+
+<h2>Welcome to Image Management Service</h2>
+<br>
+Download or clone this repository - https://github.com/uditkumawat/image_api
+<br>
+Run these commands in sequence -
+<br><br>
+1.npm install
+2.nodemon server.js
+<br><br>
+
+Run browser and go to this url to get listing of API's - localhost:8000/swagger
+<br>
+<b>
+API specs-
+    <br><br>
+User Management
+</b>
+<br>
+
+POST -> /api/user , Request Body Parameter required --> email
+
+For User signup and getting accessKey
+<br><br>
+PUT  -> /api/user , Request Body Parameter required --> email
+
+For regeneration of accessKey
+<br><br>
+<b>Image Management</b>
+<br>
+POST -> /api/image , Request Body Parameter required --> accessKey , image
+<br>
+Example - localhost:8000/api/image
+<br>
+Form-Data => { accessKey : "WDWFCNdJMP", image : file }
+<br><br>
+
+GET  -> /api/image , Request Query Parameters required --> accessKey , name
+<br>
+Example - localhost:8000/api/image?accessKey=WDWFCNdJMP&name=fileName.png
+<br><br>
+
+GET  -> /api/imagesList , Request Query Parameters required --> accessKey
+<br>
+Example - localhost:8000/api/imagesList?accessKey=WDWFCNdJMP
+<br><br>
+
+DELETE -> /api/image , Request Body Parameter required --> accessKey , name
+<br><br>
+
+PATCH -> /api/image , Request Body Parameter required --> accessKey , name , image
+<br>
+Example - localhost:8000/api/image
+<br>
+Form-Data => { accessKey : "WDWFCNdJMP", image : file }
+<br><br>
 </body>
 </html>
