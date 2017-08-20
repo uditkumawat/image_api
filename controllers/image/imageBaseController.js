@@ -3,7 +3,6 @@
 const async = require('async');
 const fs = require('fs');
 const path = require('path');
-const Models = require('../../models');
 const CONFIG = require('../../config');
 
 const ERROR = CONFIG.APPCONFIG.STATUS_MSG.ERROR;
@@ -17,14 +16,8 @@ let getImage = function(req,res){
     async.series([
         function(cb){
 
-            //check for accessKey
 
-            cb();
-        },
-        function(cb){
-
-
-            pathToSearch = path.join(__dirname,"../../uploads/"+payload.accessKey+"/"+payload.name);
+            pathToSearch = path.join(__dirname,"../../uploads/"+payload.secretKey+"/"+payload.name);
 
             if(fs.existsSync(pathToSearch)){
                 cb();
@@ -48,18 +41,12 @@ let addImage = function(req,res){
 
     async.series([
         function(cb){
-            
-            //check for accessKey
-
-            cb();
-        },
-        function(cb){
 
             //check for folder if does not exists then create
 
-            fs.stat('uploads/'+payload.accessKey,(err,stats)=>{
+            fs.stat('uploads/'+payload.secretKey,(err,stats)=>{
                if(err){
-                   fs.mkdir("uploads/"+payload.accessKey);
+                   fs.mkdir("uploads/"+payload.secretKey);
                     cb();
                }
                 else{
@@ -89,7 +76,7 @@ let addImage = function(req,res){
         },
         function(cb){
           
-            let fileName = "uploads/" + payload.accessKey + "/" + req.files.image.name;
+            let fileName = "uploads/" + payload.secretKey + "/" + req.files.image.name;
 
             fs.stat(fileName,(err,stats)=>{
                 if(err){
@@ -109,14 +96,14 @@ let addImage = function(req,res){
                     cb(ERROR.READING_DATA);
                 else 
                 {
-                    let uploadedPath = "uploads/" + payload.accessKey + "/" + req.files.image.name;
+                    let uploadedPath = "uploads/" + payload.secretKey + "/" + req.files.image.name;
 
                     fs.writeFile(uploadedPath, data, (err)=> {
                         if (err)
                             cb(ERROR.UPLOADING_ERROR);
                         else {
 
-                            let metaDatafile = "uploads/" + payload.accessKey + "/metadata.json";
+                            let metaDatafile = "uploads/" + payload.secretKey + "/metadata.json";
 
                             fs.readFile(metaDatafile,"utf-8",(err,data)=>{
 
@@ -161,16 +148,11 @@ let imagesList = function(req,res){
     async.series([
         function(cb){
             
-            //check for accessKey
-            cb();
-        },
-        function(cb){
-            
-            let dirPath = "uploads/"+payload.accessKey;
+            let dirPath = "uploads/"+payload.secretKey;
             
             fs.readdir(dirPath,(err,list)=>{
                if(err)
-                   cb(ERROR.DIRECTORY_ERROR);
+                   cb(ERROR.NOT_ADDED_IMAGES);
                 else{
                    if(list && list.length>0){
 
@@ -186,7 +168,7 @@ let imagesList = function(req,res){
         },
         function(cb){
 
-            let metaDatafile = "uploads/" + payload.accessKey + "/metadata.json";
+            let metaDatafile = "uploads/" + payload.secretKey + "/metadata.json";
 
             fs.readFile(metaDatafile,"utf-8",(err,data)=>{
 
@@ -225,13 +207,7 @@ let deleteImage = function(req,res){
     async.series([
         function(cb){
 
-            //check for accessKey
-
-            cb();
-        },
-        function(cb){
-
-            pathToSearch = path.join(__dirname,"../../uploads/"+payload.accessKey+"/"+payload.name);
+            pathToSearch = path.join(__dirname,"../../uploads/"+payload.secretKey+"/"+payload.name);
 
             if(fs.existsSync(pathToSearch)){
 
@@ -241,7 +217,7 @@ let deleteImage = function(req,res){
                     }
                     else
                     {
-                        let metaDatafile = "uploads/" + payload.accessKey + "/metadata.json";
+                        let metaDatafile = "uploads/" + payload.secretKey + "/metadata.json";
 
                         fs.readFile(metaDatafile,"utf-8",(err,data)=>{
 

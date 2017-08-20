@@ -9,10 +9,30 @@ if(!process.env.NODE_ENV)
 
 const STATUS_MSG = {
     ERROR: {
+        NOT_ADDED_IMAGES:{
+            statusCode : 400,
+            message : 'You have not added any images',
+            type : 'NOT_ADDED_IMAGES'
+        },
+        INVALID_ACCESS_KEY:{
+            statusCode : 400,
+            message : 'Invalid access key',
+            type : 'INVALID_ACCESS_KEY'
+        },
+        PROVIDE_ACCESS_KEY:{
+            statusCode : 400,
+            message : 'Please provide accessKey in request',
+            type : 'PROVIDE_ACCESS_KEY'
+        },
         EMAIL_NOT_FOUND:{
             statusCode : 400,
             message : 'Email does not exists.Please Sign up',
             type : 'EMAIL_NOT_FOUND'
+        },
+        SIGN_UP:{
+            statusCode : 400,
+            message : 'Please Sign up to get accessKey',
+            type : 'SIGN_UP'
         },
         EMAIL_EXISTS:{
             statusCode : 400,
