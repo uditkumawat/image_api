@@ -23,13 +23,28 @@ For regeneration of accessKey
 
 # Image Management
 
-POST -> /api/image , Request Body Parameter required --> accessKey , imageFile
+POST -> /api/image , Request Body Parameter required --> accessKey , image
+
+Example - localhost:8000/api/image
+
+Form-Data => { accessKey : "WDWFCNdJMP", image : file }
+
 
 GET  -> /api/image , Request Query Parameters required --> accessKey , name
 
+Example - localhost:8000/api/image?accessKey=WDWFCNdJMP&name=fileName.png
+
+
 GET  -> /api/imagesList , Request Query Parameters required --> accessKey
+
+Example - localhost:8000/api/imagesList?accessKey=WDWFCNdJMP
+
 
 DELETE -> /api/image , Request Body Parameter required --> accessKey , name
 
-PATCH -> /api/image , Request Body Parameter required --> accessKey , name , imageFile
 
+PATCH -> /api/image , Request Body Parameter required --> accessKey , name , image
+
+Example - localhost:8000/api/image
+
+Form-Data => { accessKey : "WDWFCNdJMP", image : file }
