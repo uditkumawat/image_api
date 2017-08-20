@@ -18,11 +18,11 @@ const ERROR = require("../config").APPCONFIG.STATUS_MSG.ERROR;
 
 
 router.route('*').get((req,res)=>{
-   res.sendFile(path.join(__dirname),'public/index.html');
+   return res.sendFile(path.join(__dirname),'public/index.html');
 });
 
 router.route('/logs/:type/:date').get((req,res)=>{
-    res.sendFile(path.resolve(__dirname+"/../logs/"+req.params.date+'-'+req.params.type+'.log'));
+    return res.sendFile(path.resolve(__dirname+"/../logs/"+req.params.date+'-'+req.params.type+'.log'));
 });
 
 router.route('/user').post(validate(validations.userValidation.addUser),CONTROLLER.UserBaseController.addUser);

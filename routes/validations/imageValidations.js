@@ -6,7 +6,8 @@ module.exports = {
     getImage:{
         query:{
             accessKey : Joi.string().trim().required(),
-            name : Joi.string().trim().required()
+            index : Joi.string().trim().optional(),
+            name : Joi.string().trim().optional()
         }
     },
     getImagesList:{

@@ -16,6 +16,35 @@ let getImage = function(req,res){
     async.series([
         function(cb){
 
+            let metaDatafile = "uploads/" + payload.secretKey + "/metadata.json";
+
+            fs.readFile(metaDatafile,"utf-8",(err,data)=>{
+
+                let fileData=[];
+
+                if(data){
+
+                    fileData = JSON.parse(data);
+
+                    if(payload.index && payload.index<fileData.length && fileData[payload.index]){
+
+                        payload.name = fileData[payload.index].name;
+
+                        cb();
+                    }
+                    else if(payload.name){
+                        cb();
+                    }
+                    else{
+                        cb(ERROR.NO_SUCH_IMAGE);
+                    }
+                }
+                else{
+                    cb(ERROR.NO_SUCH_IMAGE);
+                }
+            });
+        },
+        function(cb){
 
             pathToSearch = path.join(__dirname,"../../uploads/"+payload.secretKey+"/"+payload.name);
 
@@ -56,6 +85,8 @@ let addImage = function(req,res){
         },
         function(cb){
 
+            //check for image type
+
             if(req.files.image){
 
                 let fileType = req.files.image.type;
@@ -75,20 +106,6 @@ let addImage = function(req,res){
             }
         },
         function(cb){
-          
-            let fileName = "uploads/" + payload.secretKey + "/" + req.files.image.name;
-
-            fs.stat(fileName,(err,stats)=>{
-                if(err){
-                    cb();
-                }
-                else{
-                    cb(ERROR.FILE_NAME_ALREADY_EXISTS);
-                }
-            });
-            
-        },
-        function(cb){
             
             fs.readFile(req.files.image.path,(err,data)=>{
  
@@ -96,7 +113,15 @@ let addImage = function(req,res){
                     cb(ERROR.READING_DATA);
                 else 
                 {
-                    let uploadedPath = "uploads/" + payload.secretKey + "/" + req.files.image.name;
+                    //making a unique name of image file
+
+                    let timestamp = new Date().getTime().toString();
+
+                    let newFileName = timestamp+"-"+req.files.image.name;
+
+                    req.files.image.name = newFileName;
+
+                    let uploadedPath = "uploads/" + payload.secretKey + "/" + newFileName;
 
                     fs.writeFile(uploadedPath, data, (err)=> {
                         if (err)
@@ -112,6 +137,14 @@ let addImage = function(req,res){
                                 if(data){
                                     fileData = JSON.parse(data);
                                 }
+
+                                //removing unnecessary information
+
+                                delete req.files.image.fieldName;
+                                delete req.files.image.path;
+                                delete req.files.image.headers;
+
+                                //saving its originalName,size and newName in file
 
                                 fileData.push(req.files.image);
 
@@ -140,32 +173,9 @@ let imagesList = function(req,res){
     
     let payload = req.query;
 
-    let dataToSend = {};
-
-    dataToSend.names = [];
-    dataToSend.fullDetails = [];
+    let dataToSend = null;
 
     async.series([
-        function(cb){
-            
-            let dirPath = "uploads/"+payload.secretKey;
-            
-            fs.readdir(dirPath,(err,list)=>{
-               if(err)
-                   cb(ERROR.NOT_ADDED_IMAGES);
-                else{
-                   if(list && list.length>0){
-
-                       dataToSend.names = list.filter((file)=>{
-
-                           return file!="metadata.json";
-
-                       });
-                   }
-                   cb();
-               }
-            });
-        },
         function(cb){
 
             let metaDatafile = "uploads/" + payload.secretKey + "/metadata.json";
@@ -178,7 +188,15 @@ let imagesList = function(req,res){
                     fileData = JSON.parse(data);
                 }
 
-                dataToSend.fullDetails = fileData;
+                dataToSend = fileData;
+
+                if(payload.hasOwnProperty("skip") && payload.hasOwnProperty("limit")) {
+
+                    payload.skip = parseInt(payload.skip);
+                    payload.limit = parseInt(payload.limit);
+
+                    dataToSend = fileData.slice(payload.skip,payload.skip+payload.limit);
+                }
 
                 cb();
             });
@@ -230,7 +248,7 @@ let deleteImage = function(req,res){
 
                                 updatedData = fileData.filter((obj)=>{
 
-                                    return obj.originalFilename!=payload.name;
+                                    return obj.name!=payload.name;
                                 });
                             }
 

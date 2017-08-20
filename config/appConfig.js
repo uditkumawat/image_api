@@ -9,6 +9,11 @@ if(!process.env.NODE_ENV)
 
 const STATUS_MSG = {
     ERROR: {
+        NO_SUCH_IMAGE:{
+            statusCode : 404,
+            message : 'Not Found',
+            type : 'NO_SUCH_IMAGE'
+        },
         NOT_ADDED_IMAGES:{
             statusCode : 400,
             message : 'You have not added any images',
@@ -84,44 +89,37 @@ const STATUS_MSG = {
         USER_UPDATED:{
             statusCode: 200,
             message: "User details updated successfully",
-            type : "USER_UPDATED",
-            data : null
+            type : "USER_UPDATED"
         },
         USER_ADDED:{
             statusCode: 200,
             message: "User added successfully",
-            type : "USER_ADDED",
-            data : null
+            type : "USER_ADDED"
         },
         IMAGE_LIST:{
             statusCode: 200,
             message: "Images List",
-            type : "IMAGE_LIST",
-            data : null
+            type : "IMAGE_LIST"
         },
         IMAGE_ADDED:{
             statusCode: 200,
             message: "Image added",
-            type : "IMAGE_ADDED",
-            data : null
+            type : "IMAGE_ADDED"
         },
         IMAGE_UPDATED:{
             statusCode: 200,
             message: "Image updated",
-            type : "IMAGE_UPDATED",
-            data : null
+            type : "IMAGE_UPDATED"
         },
         IMAGE_DETAILS:{
             statusCode: 200,
             message: "Image Details",
-            type : "IMAGE_DETAIL",
-            data : null
+            type : "IMAGE_DETAIL"
         },
         IMAGE_DELETED:{
             statusCode: 200,
             message: "Image deleted",
-            type : "IMAGE_DELETED",
-            data : null
+            type : "IMAGE_DELETED"
         }
     }
 };
