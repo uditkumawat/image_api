@@ -50,3 +50,8 @@ PATCH -> /api/image , Request Body Parameter required --> accessKey , name , ima
 Example - localhost:8000/api/image
 
 Form-Data => { accessKey : "WDWFCNdJMP", name : fileName , image : file }
+
+
+#IMAGE COMPRESSION -
+
+"gm" third party npm module is used for image compression.

@@ -3,6 +3,7 @@
 const async = require('async');
 const fs = require('fs');
 const path = require('path');
+let gm = require('gm');
 
 const CONFIG = require('../../config');
 
@@ -115,7 +116,6 @@ let addImage = function(req,res){
                 else 
                 {
                     //making a unique name of image file
-
                     let timestamp = new Date().getTime().toString();
 
                     //remove spaces from string
@@ -127,6 +127,11 @@ let addImage = function(req,res){
                     req.files.image.name = newFileName;
 
                     let uploadedPath = "uploads/" + payload.secretKey + "/" + newFileName;
+                    let compressedFileName = "uploads/" + payload.secretKey + "/compressed-" + newFileName;
+
+                    gm(req.files.image.path).compress('Lossless').write(compressedFileName,function(err,data){
+
+                    });
 
                     fs.writeFile(uploadedPath, data, (err)=> {
                         if (err)
